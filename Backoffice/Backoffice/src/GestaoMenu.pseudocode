@@ -1,0 +1,104 @@
+#secção Menu
+
+importar GestaoEmpresa como x
+
+Chave -> Chave -> Valor
+
+modelo Menu:
+  contrutor ():       
+    Menu.items=(
+      'id' ->  (
+        'nome' -> '',
+        'preço' -> '0.00',
+        'categoria' -> '',
+        'descricao' -> ''
+      )
+    )
+
+  funcao showMenu()
+    imprime("=====================================")
+    imprime("=====================================")
+    imprime("               GESTÃO                ")
+    imprime("                MENU                 ")
+    imprime("=====================================")
+    imprime("=====================================")
+    imprime("a) Listar Menu")
+    imprime("b) Adicionar novo item")
+    imprime("c) Editar item existente")
+    imprime("c) Eliminar item existente")
+    imprime("q) Quit")
+    
+    entrada("Selecione uma opção: ", key)
+    
+    se key == a:
+      listarMenu()
+    se key == b:
+      criarItem()
+    se key == c:
+      editarItem()
+    se key == d:
+      eliminarItem()
+    senao key == q:
+      imprime("O programa fechou com sucesso.")
+      retorna
+
+  funcao listarMenu()
+    para cada chave em Menu.Items:
+      para cada chave, valor em id:
+        imprime(id + "--->" + id(valor))
+  
+  funcao editarItem():      
+                            
+    opcao = 0
+    enquanto opcao != 'q':
+
+      entrada ('Indique o ID do item a alterar: ', id)
+
+      imprime("""As caracteristicas editáveis do {Menu.items[id].nome} são:
+                 a)Nome
+                 b)Preço
+                 c)Categoria
+                 d)Descrição
+                 q)Quit
+      """)
+
+      entrada('Indique item a editar: ', opcao)
+      
+        se opcao == a:
+          entrada('Indique um novo nome para o produto: ', nvnome)
+          se nome está em Menu.items[id].nome:
+            Menu.items[id].nome = nvnome
+      
+        se opcao == b:
+          entrada('Indique o novo preço para {Menu.items[id].nome}: ', Menu.items[id].preço)
+      
+        se opcao == c:
+          entrada('Indique a nova categoria de {Menu.items[id].nome}: ', Menu.items[id].categoria)
+      
+        se opcao == d:
+          entrada('Indique uma nova descrição para o produto {Menu.items[id].nome}: ', Menu.items[id].descricao)
+          
+  funcao eliminarItem():    #Se conseguirem podem fazer uma review a isto a ver se está ok?
+    entrada('Indique o ID do item a remover do menu: ', remover)
+    buffer = ()
+    para cada i em Menu.items[i]:
+      se Menu.items[id] != remover:
+        buffer.adicionar[Menu.items[id]]
+      Menu.items() = buffer
+
+--------------------------------
+
+funcao criarItem():
+  entrada('Indique o nome do item a adicionar ao menu: ', nvnome)
+  se nvnome não está em Menu.items[id].nome:
+    id = Menu.items.chaves().tamanho() + 1
+    Menu.items[id].nome = nvnome
+
+    entrada ('Indique o preço para {nome}: ', menu.Item[id].preço) 
+    entrada ('Indique a categoria de {nome}: ', menu.Item[id].categoria)
+    entrada ('Adicione uma descrição para o {nome}', menu.Item[id].descricao)
+
+    imprime('{nome} adicionado ao menu.')
+    imprime(menu.Item[id])
+  senao:
+    imprime('Item já existente em menu.')

@@ -1,0 +1,156 @@
+importar GestaoPedidos como gestaoPedidos
+
+/* ----------- Data Base -----------  */
+
+modelo User:
+  construtor(nome, apelido, email, contacto, morada, password, nomeEmpresa, contactoEmpresa, moradaEmpresa, StatusAberto)
+    User.Nome = nome
+    User.Apelido = apelido
+    User.NomeEmpresa = nomeEmpresa
+    User.Email = email
+    User.Contacto = contacto
+    User.ContactoEmpresa = contactoEmpresa
+    User.Morada = morada
+    User.MoradaEmpresa = moradaEmpresa
+    User.Password = password
+    User.StatusAberto = falso
+    User.DescricaoEmpresa = descricaoEmpresa         #tipo uma "Bio" do Restaurante #É para adicionar a uma das opções?
+    User.Menu = []        
+    User.AccountStatus = true 
+
+#adicionando info vinda de Front office
+#Não, este modelo User é o da pessoa que é dona da conta da Empresa dentro do ETIC_Eats
+#Construtor Empresa contactanadoandada dentro de User para evitar confusões
+
+/* ---------- Funcoes -------------*/
+
+/* Menu "Gestão de Empresa" */
+
+funcao showMenu():
+  enquanto key != q
+    imprime("""
+      =========Utilizador========
+      nome: {User.Nome}, {user.Apelido}
+      Email: {User.Email}
+      Contacto: {User.Telemovel}
+      Morada: {User.Morada}
+      =========Restaurante========
+      Nome: {Empresa.Nome}
+      Telefone: {Empresa.Telefone}
+      Morada: {Empresa.Morada}
+      Descrição: {Descrição.Empresa}
+      =============Opções=========
+      a - Editar Informação
+      b - Abrir/Fechar loja
+      c - Aceder Histórico
+      d - Eliminar Conta
+      q - Sair
+      """)
+
+    se key == a:
+      listaInfoEdit()
+
+    se key == b:
+      AlterarStatus()
+      imprime("A loja está aberta: {User.StatusAberto}")
+
+    se key == c:
+      gestaoPedidos.getOrders()
+
+    se key == d:
+      desativarConta()
+
+    senao key == q:
+      retorna
+
+/* Editar Account Info */
+
+função listaInfoEdit():
+
+  imprime(""""
+    =======Edit opções=======
+    n - nome: {User.Nome}, {user.Apelido}
+    N - Nome: {Empresa.Nome}
+    e - Email: {User.Email}
+    c - Contacto: {User.Telemovel}
+    T - Telefone: {Empresa.Telefone}
+    m - Morada: {User.Morada}
+    M - Morada: {Empresa.Morada}
+    D - Descrição: {Descrição.Empresa}
+    X - Sair
+  """")
+
+
+  enquanto opcao != X:
+    entrada("Escolha a opção: " opcao) 
+     imprime (ShowMenu())
+
+    se opcao == n:
+      entrada("Altere o nome: " novoNome)
+      entrada("Altere o Apelido", novoApelido)
+      User.Nome = novoNome
+      User.Apelido = novoApelido
+
+    se opcao == e:
+      entrada("Altere o Email: ", novoEmail)
+      User.Email = novoEmail
+
+    se opcao == c:
+      entrada("Altere o contacto: ", novoContacto)
+      User.Contacto = novoContacto
+
+    se opcao == m:
+      entrada("Altere o morada: ", novaMorada)
+      User.Morada = novaMorada
+
+    se opcao == N:
+      entrada("Altere o nome da empresa: ", novaNomeEmpresa)
+      Empresa.Nome= novaNomeEmpresa
+
+    se opcao == T:
+      entrada("Altere o telefone da empresa: ", novoTelefoneEmpresa)
+      Empresa.Telefone = novoTelefoneEmpresa
+
+    se opcao == M:
+      entrada("Altere a morada da empresa: ", novaMoradaEmpresa)
+      Empresa.Morada = novaMoradaEmpresa
+
+    se opcao == D:
+      entrada("Altere a descrição da empresa: ", novaDescriçãoEmpresa)
+      Empresa.Descrição= novaDescriçãoEmpresa
+
+    senao
+      imprime("ERRO: Escolha uma opção válida.")
+
+/* Alterar Status do Restaurante (Fechado // Aberto) */
+
+funcao alterarStatus()
+  se Empresa.StatusAberto = falso:
+    Empresa.StatusAberto = verdadeiro
+    
+  senao Empresa.StatusAberto = verdadeiro:
+    Empresa.StatusAberto = falso
+    
+
+/* Desativar uma conta */
+
+funcao desativarConta()
+  imprime("======= DESATIVAR CONTA? ========")
+  imprime("                                 ")
+  imprime("     [A] SIM       [B] NÃO       ")
+  imprime("                                 ")
+  UserIsChoosing = verdadeiro
+  enquanto UserIsChoosing:
+    entrada("Escolha uma Opção: " opcao)
+    se opcao == A:
+      User.AccountStatus = falso
+      UserIsChoosing = falso
+    se opcao == B:
+      User.AccountStatus = User.AccountStatus
+      UserIsChoosing = falso
+    imprime("=================================")
+    senao:
+      imprime("ERRO: Escolha uma opcao válida.")
+
+#Penso que seja necessário criar uma função que passe todos os campos dentro do Modelo user para 'NULL' ou 'VOID' para que não desse para fazer login. Not sure.
+  
