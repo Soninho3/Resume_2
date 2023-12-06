@@ -1,0 +1,106 @@
+/* ---------- IMPORTS -------------*/
+
+importar GestaoEmpresa como gestaoEmpresa
+importar GestaoPedidos como gestaoPedidos
+importar GestaoMenu como gestaoMenu
+
+/* ---------- Funcoes -------------*/
+
+/* Funcao Register */
+
+funcao registerEmpresa()
+  imprime("=====================================")
+  imprime("                 ETIC                ")
+  imprime("                 EATS                ")
+  imprime("=====================================")
+  imprime("                                     ")
+  imprime("               REGISTER:             ")
+  RegisterNotSucess = True
+  enquanto RegisterNotSucess:
+    entrada("Nome: ", nome)
+    entrada("Apelido: ", apelido)
+    entrada("Nome da Empresa: ", nomeEmpresa)
+    entrada("Email: ", email)
+    entrada("Contacto: ", contacto)
+    entrada("Contacto: ", contactoEmpresa)
+    entrada("Morada: ", morada)
+    entrada("Morada: ", moradaEmpresa)
+    entrada("Password: ", password)
+    entrada ("Descrição da Empresa:", DescriçãoEmpresa)
+
+    empresa = gestaoEmpresa.User(nome, apelido, email, contacto, password, nomeEmpresa, contactoEmpresa, moradaEmpresa)
+    RegisterNotSucess = Falso
+    imprime("=====================================")
+    login()
+
+
+
+/* Funcao Login*/
+
+funcao login()
+  imprime("=====================================")
+  imprime("=====================================")
+  imprime("                 ETIC                ")
+  imprime("                 EATS                ")
+  imprime("=====================================")
+  imprime("                                     ")
+  imprime("                LOGIN:               ")
+  LoginNotSuccess = True
+  enquanto LoginNotSuccess:
+    entrada("Email: ", email)
+    entrada("Password: ", password)
+    se email == User.Email && password == User.Password:
+      se User.User.AccountStatus = falso:
+        print("ERRO: Esta conta foi desativada.")
+      senao:
+        LoginNotSuccess = Falso
+        mainMenu()
+    senao:
+      imprime("ERRO: Login sem sucesso. Tente novamente.")
+
+funcao startMenu()
+  imprime("=====================================")
+  imprime("=====================================")
+  imprime("                 ETIC                ")
+  imprime("                 EATS                ")
+  imprime("=====================================")
+  imprime("                                     ")
+  imprime("a) Login")
+  imprime("b) Register")
+  imprime("q) Quit")
+  entrada("Selecione uma opção: ", key)
+  
+  se key == a:
+    login()
+  senao key == b:
+    registerEmpresa()
+  senao key == q:
+    imprime("O programa fechou com sucesso.")        #Voto em "MORRERAM TODOS" como alternativa
+
+funcao mainMenu()
+  imprime("=====================================")
+  imprime("=====================================")
+  imprime("                 ETIC                ")
+  imprime("                 EATS                ")
+  imprime("=====================================")
+  imprime("                                     ")
+  imprime("a) Gestão Empresa")
+  imprime("b) Gestão de Pedidos")
+  imprime("c) Gestão de Menu")
+  imprime("q) Quit")
+
+  entrada("Selecione uma opção: ", key)
+
+  se key == a:
+    gestaoEmpresa.showMenu()
+  senao key == b:
+    gestaoPedidos.showMenu()
+  senao key == c:
+    gestaoMenu.showMenu()
+  senao key == q:
+    imprime("O programa fechou com sucesso.")
+    retorna
+
+startMenu()
+
+

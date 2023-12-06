@@ -1,0 +1,166 @@
+modelo GestaoPedidos:
+  construtor():
+    #order é exemplo, não definitivo
+    
+    GestaoPedidos.orders =(
+      '1'-> (
+        'comprador' -> 0                 #id do comprador
+        'items' -> []                    #Lista de items da order
+        'custoTotal' -> 0.00,            #Custo Total da order
+        'status' -> 0                    #Status da order(0-> por aceitar, 1-> pedido aceite, 2-> a cozinhar, 3-> a entregar, 4-> concluido, 5-> cancelado)
+      ),
+      '2'-> (
+        'items' -> []
+        'custoTotal' -> 0.00,
+        'status' -> 0
+      ),
+      '3'-> (
+        'items' -> []
+        'custoTotal' -> 0.00,
+        'status' -> 0
+      )
+    )
+
+    GestaoPedidos.orderTemp =(
+      '1'-> (
+        'comprador' -> 0                 #id do comprador
+        'items' -> []                    #Lista de items da order
+        'custoTotal' -> 0.00,            #Custo Total da order
+        'status' -> 0                    #Status da order(0-> por aceitar, 1-> pedido aceite, 2-> a cozinhar, 3-> a entregar, 4-> concluido, 5-> cancelado)
+      )
+    )
+
+  funcao displayMenu():
+
+    requestingOrder = 0
+
+    cada elemento GestaoPedidos.orders.chaves()
+      se GestaoPedidos.orders[elemento].status == 0
+        requestingOrder++
+
+    imprime("""
+      =================== MENU GESTÃO PEDIDOS ===================
+      
+      a)Editar Pedidos Correntes
+      b)Pedidos por aceitar
+      c)Historico de todos os pedidos
+      d)Mostrar Menu Novamente
+      q)voltar
+
+        Pedidos que estão por aceitar: {requestingOrder}
+      =================== MENU GESTÃO PEDIDOS ===================
+    """)
+
+  funcao displayOrderMenu():
+    imprime("""
+      =================== MENU DE PEDIDOS CORRENTES ===================
+  
+      a)Editar um pedido
+      q)voltar
+  
+      =================== MENU DE PEDIDOS CORRENTES ===================
+    """)
+
+  funcao displayNewOrderMenu():
+    imprime("""
+      =================== MENU DO PEDIDO NOVOS ===================
+  
+      a)Aceitar um pedido
+      b)Rejeitar um pedido
+      q)voltar
+  
+      =================== MENU DO PEDIDO NOVOS ===================
+    """)
+      
+  funcao acceptOrder(order):
+    saveOrderDataTemp(order)
+     
+  funcao listOrders(status): 
+    se status == 0:
+      index = 0
+
+      imprime("Lista de Orders corrente: ")
+      cada elemento GestaoPedidos.orders.chaves()
+        se GestaoPedidos.orders[elemento].status == status
+          imprime(GestaoPedidos.orders[elemento])
+          index++
+
+      se index > 0
+        displayNewOrderMenu()
+        entrada("Selecione uma opção: ", key)
+        se key == a:
+          entrada("Selecione uma order: ", order)
+          acceptOrder(order)
+        se key == b:
+          entrada("Selecione uma order: ", order)
+          rejectOrder(order)
+        se key == q:
+          retorna
+
+    se status == 1:
+      imprime("Lista de todas as Orders: ")
+      cada elemento GestaoPedidos.orders.chaves()
+          imprime(GestaoPedidos.orders[elemento])
+      
+    se status == 4:
+      index = 0
+      imprime("Lista de Orders correntes: ")
+      cada elemento GestaoPedidos.orders.chaves()
+        se GestaoPedidos.orders[elemento].status != 4 && GestaoPedidos.orders[elemento].status != 5
+          imprime(GestaoPedidos.orders[elemento])
+          index++
+
+      se index > 0
+        displayOrderMenu()
+        entrada("Selecione uma opção: ", key)
+        se key == a:
+          entrada("Selecione uma order: ", order)
+          editOrderStatus(order)
+        se key == q:
+          retorna
+
+     
+
+  funcao rejectOrder(order):
+    GestaoPedidos.orders[order].status = 5
+
+  funcao saveOrderDataTemp(order):
+    GestaoPedidos.orderTemp[order].comprador = GestaoPedidos.orders[order].comprador            #Registar na order o id do comprador enviado    
+    GestaoPedidos.orderTemp[order].items = GestaoPedidos.orders[order].items                    #Registar na order a lista de ids do items enviado como argumento na 
+    GestaoPedidos.orderTemp[order].custoTotal = GestaoPedidos.orders[order].custoTotal          #Adicionar ao registo da order cada elemento do conjunto de items na compra
+    GestaoPedidos.orderTemp[order].comprador = GestaoPedidos.orders[order].comprador
+    GestaoPedidos.orderTemp[order].status = 1                                                   #Registar na order o status como pedido aceite que é 1
+
+  funcao editOrderStatus(order):
+    se GestaoPedidos.orderTemp[order] != null:
+      entrada("Insira o novo status: ", status)
+      se status == 4:
+        GestaoPedidos.orderTemp[order] = status
+        GestaoPedidos.orders[order] = GestaoPedidos.orderTemp[order]
+        GestaoPedidos.orderTemp[order] = null
+      senao: 
+        GestaoPedidos.orderTemp[order] = status 
+    senao: 
+      imprime("Pedido inexistente!")
+
+  funcao showMenu():
+    key = 0
+    displayMenu()
+
+    enquanto key != q:
+      entrada("Selecione uma opção: ", key)
+  
+      se key == q: 
+        return
+      senao key == a: 
+        listOrders(4)
+      senao key == b: 
+        listOrders(0)
+      senao key == c: 
+        listOrders(1)
+      senao key == d: 
+        displayMenu()
+
+
+funcao getOrders()
+  retorna GestaoPedidos.orders
