@@ -1,0 +1,73 @@
+/*
+inicio do programa 
+
+*/
+
+importe carteira_digital como carteira 
+
+
+carteira.Movimentos.imprimeMenu()
+
+var_0 = "b"
+
+enquanto var_0 != "q":
+    entrada("-> ",var)
+    se var_0 == "q":
+        imprime("ate a proxima")	
+    senao:
+	    
+	   se var_0 == 1:
+         carteira.Movimentos.MostrarMovimentos()
+	
+	   se var_0 == 2:
+	       var_001 = ""
+		   enquanto var_001 != "q"
+	         imprime("lista de tipos existentes (Obs: para sair digite 'q') ->")
+		      cada i em Movimentos.existingType()
+                 imprime(i)
+			  entrada("selecione o tipo de seu interesse ->",tipo_00)
+              se Movimentos.CheckType(tipo_00) != true
+                 imprime("caractere não identificado")
+              senao: 
+                cada i em Movimentos.mapa:
+                    cada p,g em Movimentos.mapa[i]
+                        se p == tipo_00:
+                           imprime("id ->{i}",Movimentos.mapa[i])						
+     
+	 
+       se var_0 == 3: 
+         carteira.Movimentos.CreditoDebitoMenu()
+	     var_1 = " "
+	     enquanto var_1 != q:
+		
+		   entrada("insira uma opcao", opcao)
+		   se opcao != c && opcao != d:
+		      imprime("caractere nao identificado")
+	       senao: 
+		      se opcao == d:
+		        entrada("insira montante -> ",montante)
+				montante = montante * (-1)
+				entrada("insira o tipo desse movimento ->, tipo")
+				entrada("escreva uma descricao sobre o Movimento,(Obs: caso nao queire,aperte enter para proseguir. Saiba que é dado a voce a opcao de alterar depois.) ",descrição)
+				x = carteira.Movimentos(tipo,montante,descrição)
+				carteira.Movimentos.AlocarMovimento(x.tipo, x.valor, x.descricao)
+				x.saldoGlobal += x.valor
+			  senao:
+			  entrada("insira montante -> ",montante)
+				entrada("insira o tipo desse movimento ->, tipo")
+				entrada("escreva uma descricao sobre o Movimento,(Obs: caso nao queire,aperte enter para proseguir. Saiba que é dado a voce a opcao de alterar depois.) ",descrição)
+				x = carteira.Movimentos(tipo,montante,descrição)
+				carteira.Movimentos.AlocarMovimento(x.tipo, x.valor, x.descricao)
+				x.saldoGlobal += x.valor
+			     
+		
+	   se var_0 == 4: 
+	     carteira.Movimentos.imprimeMenu()
+		
+	   se var_0 == 5: 
+          imprime("saldo da sua conta -> "+carteira.Movimentos.saldoGlobal)     
+	   se var_0 == 6 :
+	        Movimentos.EditarDescricao()
+	      
+	   senao: 
+           imprime("caractere nao identificado ")	   

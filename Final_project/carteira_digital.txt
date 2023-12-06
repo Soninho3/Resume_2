@@ -1,0 +1,119 @@
+
+modelo Movimentos:
+   
+   construtor(tipo, valor, descricao):
+       Movimentos.tipo = tipo
+	   Movimentos.valor = valor 
+	   Movimentos.descricao = descricao
+	   Movimentos.id = 0 
+	   Movimentos.saldoGlobal = 0 
+	   Movimentos.existingTypes = ()
+	   
+	   
+	   funcao imprimeMenu():
+	      imprime(""
+		   
+		  ===========================
+		 /     MENU DE OPCOES        \ 
+		 \        	                 /
+		 / 1  MOSTRAR MOVIMENTOS     \
+		 \ 2- MOSTRAR POR CATEGORIA  /
+		 / 3- CRIAR MOVIMENTO        \ 
+	     \ 4- MOSTRAR MENU           /
+         / 5- MOSTRAR SALDO GLOBAL   \
+		 \ 6- EDITAR DESCRICAO       /
+		 / q- SAIR 		             \
+		 \                           /
+		  ===========================
+		  
+		  
+		  "")
+		  
+		funcao CreditoDebitoMenu():
+		    imprime(""
+		  ====================
+		 /                    \
+		 \  MENU DE OPCOES    /
+		 /                    \
+		 \ d- DEBITO          / 
+	     / c- CREDITO         \  
+         \ q- SAIR            /
+         /  		          \
+          ====================
+			
+			"")
+	   
+	   funcao GatherByCategory():
+                                                                                                        #funcao que agrupa as categorias existentes em um mapa do modelo Movimentos 	        
+			cada i em Movimentos.mapa.chaves():
+			    
+				cada j,e em Movimentos.mapa[i]:
+				    se j == "tipo":
+					   se CheckCategory(Movimentos.mapa[i][j]) == true
+                         Movimentos.existingType[Movimentos.mapa[i][j]] += 1					   
+					   
+					   senao:
+                            Movimentos.existingType[Movimentos.mapa[i][j]] = 1					   
+					    
+					    
+					        
+	   funcao MostrarMovimentos():                                 #funcao que mostra todos os Movimentos, sem exeções 
+	        
+			cada i em Movimentos.mapa.chaves():
+			   imprime("id -> "+i)
+			    cada f,g em Movimentos.mapa[i]
+                   imprime(f+" "+g)
+				imprime(" ")
+       
+	   funcao MostrarPorCategoria(categoria):                         #funcao que mostra todos os movimentos com referencia à um categoria
+	        imprime("Movimentos de categoria {categoria}")
+			cada i em dispesa.mapa.chaves()
+			    se Movimentos.mapa[i]["tipo"] == categoria
+				    imprime(Movimentos.mapa[i])
+                  			   
+
+       funcao AlocarMovimento(tipo: string, valor: numero, descricao: string):           # Pelo nome autoexplicativo, essa função realiza o trabalho de alocar um movimento já descrito no arquivo Main
+	        Movimentos.mapa[Movimentos.id] = (
+		      "tipo"-> tipo,
+		    	 "valor" -> valor,
+			  "descricao" -> descricao
+		    )
+		   Movimentos.id += 1
+	    
+		funcao EditarDescricao():                          # funcao que dada um certo id, retorna ao usuario a opcao de mudar a descricao daquele id
+             Movimentos.MostrarMovimentos():
+			 i = ""
+			 enquanto i != "q"
+			    entrada("insira o id do movimento do qual deseja mudar a descrição(Obs: aperte 'q' para sair) ->",id_00)
+				se id_00 == "q":
+				    i = "q"
+                senao:
+				   se CheckId(id_00) != true:
+				      entrada("insira nova descricao ->", NovaDescricao)
+				      Movimentos.mapa[id_00][descricao] = NovaDescricao
+				   senao:
+                      imprime("id não encontrado")				   
+				   
+										
+									
+	  
+	    funcao CheckType(tipo):                                 #funcao que checa se determinada categoria existe no mapa de categorias existentes 
+	         cada i em Movimentos.existingType.chaves():
+		      se tipo == i:
+			     retorne True
+             retorne 
+	    
+		funcao CheckId(id: numero):                        # funcao que checa se o numero de id de um movimento existe na base de dados Movimentod.mapa
+		    cada i em Movimentos.mapa.chaves():
+			     se i == id:
+				    retorne true 
+		    retorne			
+	
+	   Movimentos.mapa = (
+	
+     	   id - >(                       # base de dados que guardaria cada movimento como um id 
+      	      tipo -> 
+		      valor ->
+		      descricao ->
+              )			  
+        	)  

@@ -1,0 +1,7 @@
+____Descrição do trabalho____
+
+Formando: Miguel Machado
+
+  No arquivo principal, denominado Main, é onde o programa começa. Com uma abordagem direta ao usuario, é printado no ecrã possiveis alternativas, as quais levam o usuário a opções como registrar um movimento(o qual pode ser tanto um debito ou um credito), mostrar o menu caso seja preciso, mostrar os atuais movimentos de maneira geral ou especifica(a partir de tipos,e.g alimentação), mostrar saldo global(soma de todos os movimentos), editar descrições de movimentos e sair do programa caso preciso.
+  Para cada alternativa acima, determinado numero de funções, as quais estão alocadas no arquivo carteira_digital, começam a ser acionadas, realizando assim tanto um output de conteudos ou armazenamento de dados.   
+
